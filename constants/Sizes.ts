@@ -12,6 +12,11 @@ const Sizes = {
   CLICKABLE_PRIMARY_HEIGHT: PixelRatio.getFontScale() * 61,
   CLICKABLE_PRIMARY_BORDER: PixelRatio.getFontScale() * 15,
   CLICKABLE_FONT: PixelRatio.getFontScale() * 22,
+  INPUT_ICON_SIZE: PixelRatio.getFontScale() * 24,
+  DROPDOWN_ICON_VERTICAL_GAP:  PixelRatio.getFontScale() * 10,
+  DROPDOWN_OPTIONS_MAX_HEIGHT:  windowHeight * 0.5,
+  DROPDOWN_ICON_BG_SIZE:  PixelRatio.getFontScale() * 40,
+  DROPDOWN_ICON_SIZE:  PixelRatio.getFontScale() *15,
 };
 
 export default Sizes;
