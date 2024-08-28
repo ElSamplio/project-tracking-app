@@ -19,7 +19,7 @@ interface ButtonProps extends TouchableOpacityProps {
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
   return (
-    <TouchableOpacity {...props} style={[styles.button, props.buttonStyle]}>
+    <TouchableOpacity {...props} style={[styles.button, props.buttonStyle, props.disabled && styles.disabledButton]}>
       <Text style={[styles.buttonText, props.textStyle]}>{props.label}</Text>
     </TouchableOpacity>
   );

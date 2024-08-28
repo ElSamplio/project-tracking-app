@@ -3,6 +3,7 @@ const Colors = {
   PLACEHOLDER: "#D2D2D2", 
   CLICKABLE_PRIMARY_BG: "#004CFF",
   CLICKABLE_PRIMARY_TEXT: "#F3F3F3",
+  CLICKABLE_DISABLED: "#D9E4FF",
 };
 
 export default Colors;

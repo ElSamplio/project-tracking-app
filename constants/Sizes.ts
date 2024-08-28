@@ -6,6 +6,7 @@ const windowHeight = Dimensions.get("window").height;
 const Sizes = {
   TEXT_INPUT_HEIGHT: PixelRatio.getFontScale() * 52,
   TEXT_INPUT_BORDER_RADIUS: PixelRatio.getFontScale() * 26,
+  TEXT_INPUT_MARGIN_VERTICAL: PixelRatio.getFontScale() * 5,
   FULL_WIDTH_HORIZONTAL_GAP: windowWidth * 0.05,
   TEXT_INPUT_PLACEHOLDER_FONT: PixelRatio.getFontScale() * 14,
   TEXT_INPUT_PLACEHOLDER_GAP: PixelRatio.getFontScale() * 10,

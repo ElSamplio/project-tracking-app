@@ -32,7 +32,6 @@ const InputWithIcon: FC<InputWithIconProps> = ({
         style={[inputStyles.default.input, styles.input]}
         placeholderTextColor={Colors.PLACEHOLDER}
       />
-      <Text style={inputStyles.default.placeholder}>{props.placeholder}</Text>
       <Ionicons
         style={styles.iconContainer}
         name={iconName}

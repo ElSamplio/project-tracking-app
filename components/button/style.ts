@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.CLICKABLE_PRIMARY_BORDER,
     alignItems: "center",
     justifyContent: "center",
+    width: "90%",
+  },
+  disabledButton:{
+    backgroundColor: Colors.CLICKABLE_DISABLED,
   },
   buttonText:{
     color: Colors.CLICKABLE_PRIMARY_TEXT,

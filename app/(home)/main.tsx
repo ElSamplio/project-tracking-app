@@ -1,9 +1,15 @@
 import { View, Text } from "react-native";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store/store";
 
 const Main = () => {
+  
+  const user = useSelector((state: RootState) => state.user.user);
+  const token = useSelector((state: RootState) => state.token.token);
   return (
     <View>
-      <Text>This is gonna be the Main Screen</Text>
+      <Text>User: {JSON.stringify(user)}</Text>
+      <Text>Token: {token}</Text>
     </View>
   );
 };
