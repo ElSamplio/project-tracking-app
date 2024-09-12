@@ -1,16 +1,19 @@
+import React, { useLayoutEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { View, Text } from "react-native";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store/store";
+import HomeScreen from "@/screens/Home";
 
 const Main = () => {
-  
-  const user = useSelector((state: RootState) => state.user.user);
-  const token = useSelector((state: RootState) => state.token.token);
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, [navigation]);
+
   return (
-    <View>
-      <Text>User: {JSON.stringify(user)}</Text>
-      <Text>Token: {token}</Text>
-    </View>
+    <HomeScreen />
   );
 };
 

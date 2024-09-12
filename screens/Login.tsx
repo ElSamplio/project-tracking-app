@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Image, Text, ActivityIndicator } from "react-native";
 
 import styles from "./style";

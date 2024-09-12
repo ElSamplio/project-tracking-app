@@ -1,5 +1,5 @@
 {
-  "name": "project-tracking-app",
+  "name": "samplio-vbnosooesi34535-project-tracking",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -21,7 +21,7 @@
     "@react-navigation/stack": "^6.4.1",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.5",
-    "expo": "~51.0.28",
+    "expo": "~51.0.31",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.9",
     "expo-linking": "~6.3.1",
@@ -30,6 +30,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
+    "project-tracking": "file:",
     "project-tracking-app": "file:",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -40,7 +41,9 @@
     "react-native-screens": "3.31.1",
     "react-native-web": "~0.19.10",
     "react-redux": "^9.1.2",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "samplio-s-project-tracking": "file:",
+    "samplio-vbnosooesi34535-project-tracking": "file:"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

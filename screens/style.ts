@@ -51,16 +51,29 @@ const styles = StyleSheet.create({
     fontFamily: "Nunito",
     marginLeft: fontScale * 20,
   },
-  inputText:{
+  inputText: {
     marginTop: fontScale * 10,
     marginBottom: fontScale * 10,
   },
-  cancelText: {
-    color: "#202020",
-    fontSize: fontScale *16,
-    marginTop: fontScale *10,
-    fontFamily: "Nunito",
+  rightBubble1: {
+    top: 0,
+    right: 0,
+    width: fontScale * 160,
+    height: fontScale * 90,
   },
+  rightBubble2: {
+    top: 0,
+    right: 0,
+    width: fontScale * 235,
+    height: fontScale * 130,
+    zIndex: -1000,
+  },
+  nameHeader:{
+    fontFamily: 'RalewayBold',
+    fontSize: fontScale * 18,
+    marginTop: fontScale * 70,
+    marginLeft: fontScale * 15,
+  }
 });
 
 export default styles;
