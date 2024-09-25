@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/slices/userSlice";
 import { setToken } from "@/redux/slices/tokenSlice";
 import { AppDispatch } from "@/redux/store/store";
+import { clearMessage, setMessage } from "@/redux/slices/messageSlice";
 
 const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -20,6 +21,7 @@ const useLogin = () => {
     const loginURL = `${BASE_URL}/user/login`;
     setLoading(true);
     setError(null);
+    dispatch(clearMessage());
     try {
       const loginResp = await axios.get(loginURL, { params });
       const { data } = loginResp;
@@ -31,6 +33,9 @@ const useLogin = () => {
       navigation.navigate("main");
     } catch (err: any) {
       setError(err.response?.data || err);
+      if(err.response.status === 401){
+        dispatch(setMessage('Usuario o contraseña incorrectos'))
+      }
     } finally {
       setLoading(false);
     }

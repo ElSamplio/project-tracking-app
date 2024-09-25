@@ -68,12 +68,16 @@ const styles = StyleSheet.create({
     height: fontScale * 130,
     zIndex: -1000,
   },
-  nameHeader:{
-    fontFamily: 'RalewayBold',
+  nameHeader: {
+    fontFamily: "RalewayBold",
     fontSize: fontScale * 18,
     marginTop: fontScale * 70,
     marginLeft: fontScale * 15,
-  }
+  },
+  homeContainer: {
+    backgroundColor: "white",
+    height: "100%",
+  },
 });
 
 export default styles;

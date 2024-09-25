@@ -1,5 +1,4 @@
 import { View, Image, Text, ActivityIndicator } from "react-native";
-
 import styles from "./style";
 import InputText from "@/components/inputtext";
 import Password from "@/components/password";
@@ -8,16 +7,8 @@ import useLogin from "@/hooks/useLogin";
 import Toast from "@/components/toast";
 
 const LoginScreen = () => {
-  const {
-    login,
-    userName,
-    setUserName,
-    password,
-    setPassword,
-    loading,
-    error,
-  } = useLogin();
-
+  const { login, userName, setUserName, password, setPassword, loading } =
+    useLogin();
   const handleLogin = async () => {
     if (userName && password) {
       await login();
@@ -61,13 +52,7 @@ const LoginScreen = () => {
           disabled={!userName || !password || loading}
         />
         {loading && <ActivityIndicator size="large" color="#0000ff" />}
-        {
-          <Toast
-            message="Usuario o contraseña incorrectos"
-            visible={error?.success === false}
-            duration={3000}
-          />
-        }
+        <Toast />
       </View>
     </View>
   );

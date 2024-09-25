@@ -1,20 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Text, Animated, Easing } from 'react-native';
 import styles from './style';
+import { AppDispatch, RootState } from '@/redux/store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearMessage } from '@/redux/slices/messageSlice';
 
 interface ToastProps {
-  message: string;
-  visible: boolean;
-  duration?: number; // Duration in milliseconds
+  duration?: number;
 }
 
-const Toast: React.FC<ToastProps> = ({ message, visible, duration = 2000 }) => {
-  const [isVisible, setIsVisible] = useState(visible);
+const Toast: React.FC<ToastProps> = ({ duration = 2000 }) => {
   const opacity = useRef(new Animated.Value(0)).current;
+  const dispatch: AppDispatch = useDispatch();
+  const message = useSelector((state: RootState) => state.message.message);
 
   useEffect(() => {
-    if (visible) {
-      setIsVisible(true);
+    if (message) {
       Animated.timing(opacity, {
         toValue: 1,
         duration: 300,
@@ -29,25 +30,24 @@ const Toast: React.FC<ToastProps> = ({ message, visible, duration = 2000 }) => {
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }).start(() => {
-          setIsVisible(false);
+          dispatch(clearMessage());
         });
       }, duration);
 
       return () => clearTimeout(hideToast);
     } else {
-      // Handle immediate hiding when 'visible' changes to false
       Animated.timing(opacity, {
         toValue: 0,
         duration: 300,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: true,
       }).start(() => {
-        setIsVisible(false);
+        dispatch(clearMessage());
       });
     }
-  }, [visible, duration]);
+  }, [message, duration]);
 
-  if (!isVisible) {
+  if (!message) {
     return null;
   }
 

@@ -4,6 +4,7 @@ const Colors = {
   CLICKABLE_PRIMARY_BG: "#004CFF",
   CLICKABLE_PRIMARY_TEXT: "#F3F3F3",
   CLICKABLE_DISABLED: "#D9E4FF",
+  MODAL_HEADER: "#F8FAFF",
 };
 
 export default Colors;
