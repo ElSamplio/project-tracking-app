@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import { Text, Animated, Easing } from 'react-native';
-import styles from './style';
-import { AppDispatch, RootState } from '@/redux/store/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearMessage } from '@/redux/slices/messageSlice';
+import React, { useEffect, useRef } from "react";
+import { Text, Animated, Easing } from "react-native";
+import styles from "./style";
+import { AppDispatch, RootState } from "@/redux/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { clearMessage } from "@/redux/slices/messageSlice";
 
 interface ToastProps {
   duration?: number;
@@ -14,6 +14,17 @@ const Toast: React.FC<ToastProps> = ({ duration = 2000 }) => {
   const dispatch: AppDispatch = useDispatch();
   const message = useSelector((state: RootState) => state.message.message);
 
+  const clearAnimated = () => {
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 300,
+      easing: Easing.inOut(Easing.ease),
+      useNativeDriver: true,
+    }).start(() => {
+      dispatch(clearMessage());
+    });
+  };
+
   useEffect(() => {
     if (message) {
       Animated.timing(opacity, {
@@ -23,27 +34,11 @@ const Toast: React.FC<ToastProps> = ({ duration = 2000 }) => {
         useNativeDriver: true,
       }).start();
 
-      const hideToast = setTimeout(() => {
-        Animated.timing(opacity, {
-          toValue: 0,
-          duration: 300,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }).start(() => {
-          dispatch(clearMessage());
-        });
-      }, duration);
+      const hideToast = setTimeout(clearAnimated, duration);
 
       return () => clearTimeout(hideToast);
     } else {
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 300,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: true,
-      }).start(() => {
-        dispatch(clearMessage());
-      });
+      clearAnimated();
     }
   }, [message, duration]);
 
