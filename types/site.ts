@@ -15,6 +15,7 @@ type Location = {
 };
 
 export type Site = {
+  _id: string,
   name: string;
   description?: string;
   location?: Location;

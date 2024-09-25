@@ -10,6 +10,8 @@ import ProjectDialog from "./forms/ProjectDialog";
 import Toast from "@/components/toast";
 import { clearMessage } from "@/redux/slices/messageSlice";
 import Button from "@/components/button";
+import { InputWithIcon } from "@/components/common";
+import PressableTag from "@/components/pressabletag";
 
 const HomeScreen = () => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -49,8 +51,19 @@ const HomeScreen = () => {
 
       {companyHasProjects ? (
         <View>
-          <Text>YES PROJECTS</Text>
-          <Text>Company: {JSON.stringify(company)}</Text>
+          <View style={styles.searchContainer}>
+            <InputWithIcon iconName="search" placeholder="Buscar" />
+          </View>
+          <Text style={styles.sectionTitle}>Proyectos</Text>
+          <View style={styles.tagsContainer}>
+            {company?.projects?.map((project) => (
+              <PressableTag
+                key={project._id}
+                tagKey={project._id}
+                text={project.name}
+              />
+            ))}
+          </View>
           <Button
             label="Nuevo proyecto"
             onPress={() => setModalVisible(true)}

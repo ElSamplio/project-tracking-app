@@ -71,13 +71,28 @@ const styles = StyleSheet.create({
   nameHeader: {
     fontFamily: "RalewayBold",
     fontSize: fontScale * 18,
-    marginTop: fontScale * 70,
-    marginLeft: fontScale * 15,
+    marginTop: fontScale * 40,
+    marginBottom: fontScale * 5,
+    flexWrap: "wrap",
+    width: fontScale * 200,
   },
   homeContainer: {
     backgroundColor: "white",
     height: "100%",
+    padding: fontScale * 10
   },
+  searchContainer: {
+    alignItems: "center"
+  },
+  tagsContainer:{
+    flexDirection: "row",
+    flexWrap: "wrap"
+  },
+  sectionTitle:{
+    fontFamily: "RalewayRegular",
+    fontSize: fontScale * 18,
+    marginBottom: fontScale * 10,
+  }
 });
 
 export default styles;

@@ -12,6 +12,7 @@ export default function RootLayout() {
     Poppins: require("../assets/fonts/Poppins-Medium.ttf"),
     Nunito: require("../assets/fonts/NunitoSans_10pt-Light.ttf"),
     RalewayBold: require("../assets/fonts/Raleway-Bold.ttf"),
+    RalewayRegular: require("../assets/fonts/Raleway-Regular.ttf"),
   });
 
   useEffect(() => {
