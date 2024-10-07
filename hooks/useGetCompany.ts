@@ -20,7 +20,6 @@ const useGetCompany = () => {
       const responseData = response?.data;
       const company: Company = responseData?.data;
       dispatch(setCompany(company));
-      console.log(new Date().getTime(), '  >  ',{company})
     } catch (err: any) {
       setError(err.response?.data || err);
     } finally {

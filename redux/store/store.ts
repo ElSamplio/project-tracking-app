@@ -4,6 +4,7 @@ import userReducer from '@/redux/slices/userSlice';
 import companyReducer from '@/redux/slices/companySlice';
 import tokenReducer from '@/redux/slices/tokenSlice';
 import messageReducer from '@/redux/slices/messageSlice';
+import projectReducer from '@/redux/slices/projectSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     company: companyReducer,
     token: tokenReducer,
     message: messageReducer,
+    project: projectReducer,
   },
 });
 

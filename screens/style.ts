@@ -79,20 +79,25 @@ const styles = StyleSheet.create({
   homeContainer: {
     backgroundColor: "white",
     height: "100%",
-    padding: fontScale * 10
+    padding: fontScale * 10,
   },
   searchContainer: {
-    alignItems: "center"
+    alignItems: "center",
   },
-  tagsContainer:{
+  tagsContainer: {
     flexDirection: "row",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
-  sectionTitle:{
+  sectionTitleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  sectionTitle: {
     fontFamily: "RalewayRegular",
     fontSize: fontScale * 18,
     marginBottom: fontScale * 10,
-  }
+  },
 });
 
 export default styles;

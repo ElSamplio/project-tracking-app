@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import Colors from "@/constants/Colors";
-import Sizes from "@/constants/Sizes";
 import { PixelRatio } from "react-native";
 
 const fontScale = PixelRatio.getFontScale();

@@ -1,4 +1,7 @@
-import { Image } from "./image";
+type Image = {
+  name: string;
+  url: string;
+};
 
 type Coordinates = {
   type: number[];
@@ -15,7 +18,7 @@ type Location = {
 };
 
 export type Site = {
-  _id: string,
+  _id: string;
   name: string;
   description?: string;
   location?: Location;

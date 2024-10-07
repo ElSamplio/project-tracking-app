@@ -9,9 +9,10 @@ import ActionCard from "@/components/actioncard";
 import ProjectDialog from "./forms/ProjectDialog";
 import Toast from "@/components/toast";
 import { clearMessage } from "@/redux/slices/messageSlice";
-import Button from "@/components/button";
 import { InputWithIcon } from "@/components/common";
-import PressableTag from "@/components/pressabletag";
+import TagsBoard from "./common";
+import { Tag } from "@/types/tag";
+import { clearProject, setProject } from "@/redux/slices/projectSlice";
 
 const HomeScreen = () => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -19,11 +20,46 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const { loading, error, loadCompany } = useGetCompany();
   const dispatch: AppDispatch = useDispatch();
+  const project = useSelector((state: RootState) => state.project.project);
 
   const companyHasProjects = useMemo(
     () => company?.projects?.length && company?.projects?.length > 0,
     [company]
   );
+
+  const projectsTags: Tag[] | undefined = useMemo(
+    () =>
+      company?.projects?.map((project) => ({
+        id: project._id,
+        label: project.name,
+        selected: false,
+      })),
+    [company]
+  );
+
+  const sitesTags: Tag[] | undefined = useMemo(() => {
+    const sites: Tag[] = [];
+    if (!project) {
+      company?.projects?.forEach((project) =>
+        project.sites?.forEach((site) =>
+          sites.push({
+            id: site._id,
+            label: site.name,
+            selected: false,
+          })
+        )
+      );
+    } else {
+      project.sites?.forEach((site) =>
+        sites.push({
+          id: site._id,
+          label: site.name,
+          selected: false,
+        })
+      );
+    }
+    return sites;
+  }, [company, project]);
 
   useEffect(() => {
     dispatch(clearMessage());
@@ -32,6 +68,24 @@ const HomeScreen = () => {
     };
     fetchCompanyDataAsync();
   }, []);
+
+  const handleProjectTagPress = (tag: Tag) => {
+    console.log({ tag });
+    if (tag.selected) {
+      const foundProject = company?.projects?.filter(
+        (elem) => elem._id === tag.id
+      );
+      if (foundProject && foundProject.length > 0) {
+        dispatch(setProject(foundProject[0]));
+      }
+    } else {
+      dispatch(clearProject());
+    }
+  };
+
+  const handleSiteTagPress = (tag: Tag) => {
+    console.log({ tag });
+  };
 
   return loading ? (
     <ActivityIndicator size="large" color="#0000ff" />
@@ -54,19 +108,17 @@ const HomeScreen = () => {
           <View style={styles.searchContainer}>
             <InputWithIcon iconName="search" placeholder="Buscar" />
           </View>
-          <Text style={styles.sectionTitle}>Proyectos</Text>
-          <View style={styles.tagsContainer}>
-            {company?.projects?.map((project) => (
-              <PressableTag
-                key={project._id}
-                tagKey={project._id}
-                text={project.name}
-              />
-            ))}
-          </View>
-          <Button
-            label="Nuevo proyecto"
-            onPress={() => setModalVisible(true)}
+          <TagsBoard
+            title="Proyectos"
+            data={projectsTags}
+            onIconButtonPress={() => setModalVisible(true)}
+            onTagPress={handleProjectTagPress}
+          />
+          <TagsBoard
+            title={!project ? "Sitios" : `Sitios - Proyecto ${project.name}`}
+            data={sitesTags}
+            onIconButtonPress={() => {}}
+            onTagPress={handleSiteTagPress}
           />
         </View>
       ) : (

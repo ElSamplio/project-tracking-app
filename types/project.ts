@@ -1,8 +1,8 @@
-import { Site } from "./site"
+import { Site } from "./site";
 
 export type Project = {
-    _id: string,
-    name: string,
-    description?: string,
-    sites?: Site[]
-}
+  _id: string;
+  name: string;
+  description?: string;
+  sites?: Site[];
+};
