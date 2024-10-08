@@ -10,7 +10,8 @@ interface IconButtonProps {
   iconSize: number;
   iconColor: string;
   backgroundColor: string;
-  size?: number
+  size?: number;
+  disabled?: boolean;
   onPress?: () => void;
 }
 
@@ -20,12 +21,14 @@ const IconButton: FC<IconButtonProps> = ({
   iconColor,
   backgroundColor,
   size,
+  disabled,
   onPress,
 }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[styles.button, { backgroundColor, width: size, height: size }]}
+      disabled={disabled}
     >
       <Ionicons name={iconName} size={iconSize} color={iconColor} />
     </TouchableOpacity>

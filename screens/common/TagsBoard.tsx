@@ -1,7 +1,7 @@
 import IconButton from "@/components/iconbutton";
 import PressableTag from "@/components/pressabletag";
 import { FC, useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import styles from "../style";
 import { Tag } from "@/types/tag";
 import Colors from "@/constants/Colors";
@@ -9,6 +9,7 @@ import Colors from "@/constants/Colors";
 interface TagsBoardProps {
   title: string;
   data: Tag[] | undefined;
+  disableIconButton?: boolean;
   onIconButtonPress: () => void;
   onTagPress?: (tag: Tag) => void;
 }
@@ -16,6 +17,7 @@ interface TagsBoardProps {
 const TagsBoard: FC<TagsBoardProps> = ({
   title,
   data,
+  disableIconButton,
   onIconButtonPress,
   onTagPress,
 }) => {
@@ -51,25 +53,32 @@ const TagsBoard: FC<TagsBoardProps> = ({
       <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>{title}</Text>
         <IconButton
-          backgroundColor={Colors.CLICKABLE_PRIMARY_BG}
+          backgroundColor={
+            !disableIconButton
+              ? Colors.CLICKABLE_PRIMARY_BG
+              : Colors.CLICKABLE_DISABLED
+          }
           iconColor="white"
           iconName="add"
           iconSize={18}
           size={35}
           onPress={onIconButtonPress}
+          disabled={disableIconButton}
         />
       </View>
-      <View style={styles.tagsContainer}>
-        {tagsData?.map((elem) => (
-          <PressableTag
-            key={elem.id}
-            tagKey={elem.id}
-            text={elem.label}
-            selected={elem.selected}
-            onPress={() => handlePress(elem.id)}
-          />
-        ))}
-      </View>
+      <ScrollView style={styles.tagsScroll}>
+        <View style={styles.tagsContainer}>
+          {tagsData?.map((elem) => (
+            <PressableTag
+              key={elem.id}
+              tagKey={elem.id}
+              text={elem.label}
+              selected={elem.selected}
+              onPress={() => handlePress(elem.id)}
+            />
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };

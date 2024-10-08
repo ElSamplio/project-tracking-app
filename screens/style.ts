@@ -84,6 +84,9 @@ const styles = StyleSheet.create({
   searchContainer: {
     alignItems: "center",
   },
+  tagsScroll:{
+    height: fontScale*90,
+  },
   tagsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",

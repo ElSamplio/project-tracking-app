@@ -13,11 +13,15 @@ import { InputWithIcon } from "@/components/common";
 import TagsBoard from "./common";
 import { Tag } from "@/types/tag";
 import { clearProject, setProject } from "@/redux/slices/projectSlice";
+import { EntityType } from "@/enums/EntityType";
 
 const HomeScreen = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const company = useSelector((state: RootState) => state.company.company);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [currentEntityType, setCurrentEntityType] = useState<EntityType>(
+    EntityType.PROJECT
+  );
   const { loading, error, loadCompany } = useGetCompany();
   const dispatch: AppDispatch = useDispatch();
   const project = useSelector((state: RootState) => state.project.project);
@@ -70,7 +74,6 @@ const HomeScreen = () => {
   }, []);
 
   const handleProjectTagPress = (tag: Tag) => {
-    console.log({ tag });
     if (tag.selected) {
       const foundProject = company?.projects?.filter(
         (elem) => elem._id === tag.id
@@ -85,6 +88,11 @@ const HomeScreen = () => {
 
   const handleSiteTagPress = (tag: Tag) => {
     console.log({ tag });
+  };
+
+  const handleNewEntity = (entityType: EntityType) => {
+    setModalVisible(true);
+    setCurrentEntityType(entityType);
   };
 
   return loading ? (
@@ -111,14 +119,15 @@ const HomeScreen = () => {
           <TagsBoard
             title="Proyectos"
             data={projectsTags}
-            onIconButtonPress={() => setModalVisible(true)}
+            onIconButtonPress={() => handleNewEntity(EntityType.PROJECT)}
             onTagPress={handleProjectTagPress}
           />
           <TagsBoard
             title={!project ? "Sitios" : `Sitios - Proyecto ${project.name}`}
             data={sitesTags}
-            onIconButtonPress={() => {}}
+            onIconButtonPress={() => handleNewEntity(EntityType.SITE)}
             onTagPress={handleSiteTagPress}
+            disableIconButton={!project}
           />
         </View>
       ) : (
@@ -134,7 +143,8 @@ const HomeScreen = () => {
         />
       )}
       <ProjectDialog
-        header="Nuevo proyecto"
+        entityType={currentEntityType}
+        header={`Nuevo ${currentEntityType}`}
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
       />

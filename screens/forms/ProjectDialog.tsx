@@ -1,16 +1,19 @@
 import Dialog from "@/components/dialog";
 import InputText from "@/components/inputtext";
+import { EntityType } from "@/enums/EntityType";
 import useSaveProject from "@/hooks/useSaveProject";
 
 interface ProjectDialogProps {
   visible: boolean;
   header: string;
+  entityType: EntityType;
   onClose: () => void;
 }
 
 const ProjectDialog: React.FC<ProjectDialogProps> = ({
   visible,
   header,
+  entityType,
   onClose,
 }) => {
   const {
@@ -19,12 +22,20 @@ const ProjectDialog: React.FC<ProjectDialogProps> = ({
     description,
     setDescription,
     saveProject,
+    saveSite,
     loading,
     error,
   } = useSaveProject();
 
   const handleSave = async () => {
-    await saveProject();
+    switch (entityType) {
+      case EntityType.PROJECT:
+        await saveProject();
+        break;
+      case EntityType.SITE:
+        await saveSite();
+        break;
+    }
     onClose();
   };
 
