@@ -7,14 +7,17 @@ const fontScale = PixelRatio.getFontScale();
 const styles = StyleSheet.create({
   tagContainer: {
     backgroundColor: Colors.TAG_BACKGROUND,
-    borderRadius: fontScale * 5,
+    borderRadius: fontScale * 18,
+    minHeight:fontScale * 30,
     alignItems: "center",
     justifyContent: "center",
     margin: fontScale * 5,
-    padding: fontScale * 5
+    paddingLeft: fontScale * 10,
+    paddingRight: fontScale * 10,
   },
   tagText: {
-    fontFamily: "RalewayRegular"
+    fontFamily: "RalewayRegular",
+    color: Colors.TAG_TEXT_COLOR,
   },
 });
 

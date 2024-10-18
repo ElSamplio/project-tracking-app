@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   searchContainer: {
     alignItems: "center",
   },
-  tagsScroll:{
-    height: fontScale*90,
+  tagsScroll: {
+    height: fontScale * 90,
   },
   tagsContainer: {
     flexDirection: "row",
@@ -96,7 +96,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  sectionTitle: {
+  sectionTitleTextContainer: {
+    flex: 11,
+  },
+  sectionTitleIconContainer: {
+    flex: 1,
+  },
+  sectionTitleText: {
     fontFamily: "RalewayRegular",
     fontSize: fontScale * 18,
     marginBottom: fontScale * 10,

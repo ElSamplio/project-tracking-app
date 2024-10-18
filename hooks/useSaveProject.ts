@@ -71,6 +71,8 @@ const useSaveProject = () => {
           dispatch(setMessage("Sitio creado"));
           dispatch(clearProject())
         }
+      }else{
+        dispatch(setMessage('Debes seleccionar un proyecto para crear un sitio'))
       }
     } catch (err) {
       console.log({ err });

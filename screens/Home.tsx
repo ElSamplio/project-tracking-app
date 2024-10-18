@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store/store";
 import useGetCompany from "@/hooks/useGetCompany";
 import styles from "./style";
-import Colors from "@/constants/Colors";
-import ActionCard from "@/components/actioncard";
 import ProjectDialog from "./forms/ProjectDialog";
 import Toast from "@/components/toast";
 import { clearMessage } from "@/redux/slices/messageSlice";
@@ -14,6 +12,7 @@ import TagsBoard from "./common";
 import { Tag } from "@/types/tag";
 import { clearProject, setProject } from "@/redux/slices/projectSlice";
 import { EntityType } from "@/enums/EntityType";
+import ImageUploader from "./ImagePicker";
 
 const HomeScreen = () => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -22,14 +21,9 @@ const HomeScreen = () => {
   const [currentEntityType, setCurrentEntityType] = useState<EntityType>(
     EntityType.PROJECT
   );
-  const { loading, error, loadCompany } = useGetCompany();
+  const { loading, loadCompany } = useGetCompany();
   const dispatch: AppDispatch = useDispatch();
   const project = useSelector((state: RootState) => state.project.project);
-
-  const companyHasProjects = useMemo(
-    () => company?.projects?.length && company?.projects?.length > 0,
-    [company]
-  );
 
   const projectsTags: Tag[] | undefined = useMemo(
     () =>
@@ -111,37 +105,29 @@ const HomeScreen = () => {
         style={styles.nameHeader}
       >{`¡Bienvenido, ${user?.firstName}!`}</Text>
 
-      {companyHasProjects ? (
-        <View>
-          <View style={styles.searchContainer}>
-            <InputWithIcon iconName="search" placeholder="Buscar" />
-          </View>
-          <TagsBoard
-            title="Proyectos"
-            data={projectsTags}
-            onIconButtonPress={() => handleNewEntity(EntityType.PROJECT)}
-            onTagPress={handleProjectTagPress}
-          />
+      <View>
+        <View style={styles.searchContainer}>
+          <InputWithIcon iconName="search" placeholder="Buscar" />
+        </View>
+        <TagsBoard
+          title="Proyectos"
+          data={projectsTags}
+          tagType={EntityType.PROJECT}
+          onIconButtonPress={() => handleNewEntity(EntityType.PROJECT)}
+          onTagPress={handleProjectTagPress}
+        />
+        {projectsTags && projectsTags.length > 0 && (
           <TagsBoard
             title={!project ? "Sitios" : `Sitios - Proyecto ${project.name}`}
             data={sitesTags}
+            tagType={EntityType.SITE}
             onIconButtonPress={() => handleNewEntity(EntityType.SITE)}
             onTagPress={handleSiteTagPress}
             disableIconButton={!project}
           />
-        </View>
-      ) : (
-        <ActionCard
-          title="No hay proyectos"
-          content="Aún no tienes proyectos en tu compañía, puedes crear tu primer proyecto pulsando el botón"
-          action={{
-            iconName: "arrow-forward",
-            iconBackground: Colors.CLICKABLE_PRIMARY_BG,
-            iconColor: "white",
-            onActionPress: () => setModalVisible(true),
-          }}
-        />
-      )}
+        )}
+        <ImageUploader/>
+      </View>
       <ProjectDialog
         entityType={currentEntityType}
         header={`Nuevo ${currentEntityType}`}
