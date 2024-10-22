@@ -3,10 +3,12 @@ import axios from "axios";
 import { BASE_URL } from "@/constants/Common";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { setUser } from "@/redux/slices/userSlice";
-import { setToken } from "@/redux/slices/tokenSlice";
+import { clearUser, setUser } from "@/redux/slices/userSlice";
+import { clearToken, setToken } from "@/redux/slices/tokenSlice";
 import { AppDispatch } from "@/redux/store/store";
 import { clearMessage, setMessage } from "@/redux/slices/messageSlice";
+import { clearProject } from "@/redux/slices/projectSlice";
+import { clearSite } from "@/redux/slices/siteSlice";
 
 const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -33,12 +35,24 @@ const useLogin = () => {
       navigation.navigate("main");
     } catch (err: any) {
       setError(err.response?.data || err);
-      if(err.response.status === 401){
-        dispatch(setMessage('Usuario o contraseña incorrectos'))
+      if (err.response.status === 401) {
+        dispatch(setMessage("Usuario o contraseña incorrectos"));
       }
     } finally {
       setLoading(false);
     }
+  };
+
+  const logout = () => {
+    try {
+      dispatch(clearMessage());
+      dispatch(clearProject());
+      dispatch(clearSite());
+      dispatch(clearUser());
+      dispatch(clearToken());
+      // @ts-expect-error: Ignoring type error intentionally
+      navigation.navigate("index");
+    } catch (err) {}
   };
 
   return {
@@ -49,6 +63,7 @@ const useLogin = () => {
     setPassword,
     loading,
     error,
+    logout,
   };
 };
 

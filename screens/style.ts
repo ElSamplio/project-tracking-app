@@ -68,10 +68,13 @@ const styles = StyleSheet.create({
     height: fontScale * 130,
     zIndex: -1000,
   },
+  logoutIcon: {
+    marginTop: 10,
+  },
   nameHeader: {
     fontFamily: "RalewayBold",
     fontSize: fontScale * 18,
-    marginTop: fontScale * 40,
+    marginTop: fontScale * 10,
     marginBottom: fontScale * 5,
     flexWrap: "wrap",
     width: fontScale * 200,

@@ -12,7 +12,12 @@ import TagsBoard from "./common";
 import { Tag } from "@/types/tag";
 import { clearProject, setProject } from "@/redux/slices/projectSlice";
 import { EntityType } from "@/enums/EntityType";
-import ImageUploader from "./ImagePicker";
+import ImageBoard from "./ImageBoard";
+import IconButton from "@/components/iconbutton";
+import Colors from "@/constants/Colors";
+import useLogin from "@/hooks/useLogin";
+import { clearSite, setSite } from "@/redux/slices/siteSlice";
+import { Site } from "@/types/site";
 
 const HomeScreen = () => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -22,8 +27,10 @@ const HomeScreen = () => {
     EntityType.PROJECT
   );
   const { loading, loadCompany } = useGetCompany();
+  const { logout } = useLogin();
   const dispatch: AppDispatch = useDispatch();
   const project = useSelector((state: RootState) => state.project.project);
+  const site = useSelector((state: RootState) => state.site.site);
 
   const projectsTags: Tag[] | undefined = useMemo(
     () =>
@@ -74,6 +81,7 @@ const HomeScreen = () => {
       );
       if (foundProject && foundProject.length > 0) {
         dispatch(setProject(foundProject[0]));
+        dispatch(clearSite());
       }
     } else {
       dispatch(clearProject());
@@ -81,7 +89,33 @@ const HomeScreen = () => {
   };
 
   const handleSiteTagPress = (tag: Tag) => {
-    console.log({ tag });
+    if (tag.selected) {
+      const foundProject = company?.projects?.filter(
+        (elem) => elem._id === tag.id
+      );
+      let foundSite: Site | undefined = undefined;
+      if (project) {
+        const foundSites = project.sites?.filter((elem) => elem._id === tag.id);
+        if (foundSites && foundSites?.length > 0) {
+          foundSite = foundSites[0];
+        }
+      } else {
+        for (let prj of company?.projects || []) {
+          const foundSites = prj.sites?.filter((elem) => elem._id === tag.id);
+          if (foundSites && foundSites?.length > 0) {
+            foundSite = foundSites[0];
+          }
+          if (foundSite) {
+            break;
+          }
+        }
+      }
+      if (foundSite) {
+        dispatch(setSite(foundSite));
+      }
+    } else {
+      dispatch(clearSite());
+    }
   };
 
   const handleNewEntity = (entityType: EntityType) => {
@@ -93,6 +127,16 @@ const HomeScreen = () => {
     <ActivityIndicator size="large" color="#0000ff" />
   ) : (
     <View style={styles.homeContainer}>
+      <View style={styles.logoutIcon}>
+        <IconButton
+          backgroundColor={Colors.TAG_BACKGROUND}
+          iconColor={Colors.TAG_TEXT_COLOR}
+          iconName="log-out-outline"
+          iconSize={20}
+          size={40}
+          onPress={logout}
+        />
+      </View>
       <Image
         source={require("../assets/images/right_bubble_01.png")}
         style={[styles.bubble, styles.rightBubble1]}
@@ -126,7 +170,7 @@ const HomeScreen = () => {
             disableIconButton={!project}
           />
         )}
-        <ImageUploader/>
+        <ImageBoard />
       </View>
       <ProjectDialog
         entityType={currentEntityType}
