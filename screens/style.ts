@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sectionTitleText: {
-    fontFamily: "RalewayRegular",
-    fontSize: fontScale * 18,
+    fontFamily: "RalewayBold",
+    fontSize: fontScale * 15,
     marginBottom: fontScale * 10,
   },
 });

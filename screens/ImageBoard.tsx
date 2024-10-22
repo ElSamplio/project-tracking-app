@@ -3,6 +3,7 @@ import { Button, Image, ScrollView, View, Text } from "react-native";
 import React, { useState } from "react";
 import { FileType } from "@/types/file-type";
 import useSaveImages from "@/hooks/useSaveImages";
+import ImageViewer from "@/components/imageviewer";
 
 // Main component
 const ImageBoard: React.FC = () => {
@@ -87,19 +88,20 @@ const ImageBoard: React.FC = () => {
   };
 
   return (
-    <View>
-      <Button title="Pick Images" onPress={pickImages} />
-      <Button title="Take a Photo" onPress={takePhoto} />
-      <ScrollView horizontal>
-        {images.map((image, index) => (
-          <Image
-            key={index}
-            source={{ uri: image }}
-            style={{ width: 100, height: 100, margin: 5 }}
-          />
-        ))}
-      </ScrollView>
-      {imageUrls.length > 0 && (
+    <ScrollView>
+      {/* <Button title="Pick Images" onPress={pickImages} />
+      <Button title="Take a Photo" onPress={takePhoto} /> */}
+      <Text
+        style={{
+          fontFamily: "RalewayBold",
+          fontSize: 18,
+          marginBottom: 10,
+        }}
+      >
+        Fotos
+      </Text>
+      <ImageViewer imagesUris={images} />
+      {/* {imageUrls.length > 0 && (
         <View>
           {imageUrls.map((imageUrl, index) => (
             <View key={index}>
@@ -111,8 +113,8 @@ const ImageBoard: React.FC = () => {
             </View>
           ))}
         </View>
-      )}
-    </View>
+      )} */}
+    </ScrollView>
   );
 };
 
