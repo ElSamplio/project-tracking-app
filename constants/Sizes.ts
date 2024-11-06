@@ -17,7 +17,9 @@ const Sizes = {
   DROPDOWN_ICON_VERTICAL_GAP:  PixelRatio.getFontScale() * 10,
   DROPDOWN_OPTIONS_MAX_HEIGHT:  windowHeight * 0.5,
   DROPDOWN_ICON_BG_SIZE:  PixelRatio.getFontScale() * 40,
-  DROPDOWN_ICON_SIZE:  PixelRatio.getFontScale() *15,
+  DROPDOWN_ICON_SIZE:  PixelRatio.getFontScale() * 15,
+  ROUND_BUTTON_SIZE: PixelRatio.getFontScale() * 30,
+  ROUND_BUTTON_ICON_SIZE: PixelRatio.getFontScale() * 15,
 };
 
 export default Sizes;

@@ -18,6 +18,7 @@ import Colors from "@/constants/Colors";
 import useLogin from "@/hooks/useLogin";
 import { clearSite, setSite } from "@/redux/slices/siteSlice";
 import { Site } from "@/types/site";
+import Sizes from "@/constants/Sizes";
 
 const HomeScreen = () => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -132,8 +133,8 @@ const HomeScreen = () => {
           backgroundColor={Colors.TAG_BACKGROUND}
           iconColor={Colors.TAG_TEXT_COLOR}
           iconName="log-out-outline"
-          iconSize={20}
-          size={40}
+          iconSize={Sizes.ROUND_BUTTON_ICON_SIZE}
+          size={Sizes.ROUND_BUTTON_SIZE}
           onPress={logout}
         />
       </View>

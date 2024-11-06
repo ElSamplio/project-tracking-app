@@ -20,13 +20,12 @@ const useSaveImages = () => {
   };
 
   // Function to upload the image to S3
-  const uploadToS3 = async (file: FileType): Promise<string | null> => {
+  const uploadToS3 = async (folder: string, file: FileType): Promise<string | null> => {
     try {
       const bucketUrlResp = await api.get("/param");
       const results = bucketUrlResp.data.data;
       const bucketUrl = results[0].BUCKET_URL;
-      const s3UploadUrl = `${bucketUrl}${file.fileName}`;
-
+      const s3UploadUrl = `${bucketUrl}${folder}/${file.fileName}`;
       const resizedUri = await resizeImage(file.uri);
       if (!resizedUri) return null;
 

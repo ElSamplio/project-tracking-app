@@ -110,6 +110,12 @@ const styles = StyleSheet.create({
     fontSize: fontScale * 15,
     marginBottom: fontScale * 10,
   },
+  photosTitleText: {
+    fontFamily: "RalewayBold",
+    fontSize: fontScale * 15,
+    marginBottom: fontScale * 10,
+    flex: 10,
+  },
 });
 
 export default styles;

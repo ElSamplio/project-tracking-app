@@ -5,6 +5,7 @@ import useGetApi from "./useGetApi";
 import useGetCompany from "./useGetCompany";
 import { clearMessage, setMessage } from "@/redux/slices/messageSlice";
 import { clearProject } from "@/redux/slices/projectSlice";
+import { Site } from "@/types/site";
 const useSaveProject = () => {
   const [name, setName] = useState<string>();
   const [description, setDescription] = useState<string>();
@@ -46,7 +47,7 @@ const useSaveProject = () => {
     }
   };
 
-  const saveSite = async () => {
+  const saveSite = async (site?: Site) => {
     try {
       setLoading(true);
       if (company && project && company.projects) {
@@ -63,16 +64,19 @@ const useSaveProject = () => {
             projects: projectsCopy,
           },
         };
+        console.log("SAVING >>> ", JSON.stringify(body));
         const response = await api.patch("/company", body);
         if (response.data?.success) {
           await loadCompany();
           setName("");
           setDescription("");
-          dispatch(setMessage("Sitio creado"));
-          dispatch(clearProject())
+          dispatch(setMessage(site ? "Sitio actualizado" : "Sitio creado"));
+          dispatch(clearProject());
         }
-      }else{
-        dispatch(setMessage('Debes seleccionar un proyecto para crear un sitio'))
+      } else {
+        dispatch(
+          setMessage("Debes seleccionar un proyecto para crear un sitio")
+        );
       }
     } catch (err) {
       console.log({ err });

@@ -7,6 +7,7 @@ import { Tag } from "@/types/tag";
 import Colors from "@/constants/Colors";
 import ActionCard from "@/components/actioncard";
 import { EntityType } from "@/enums/EntityType";
+import Sizes from "@/constants/Sizes";
 
 interface TagsBoardProps {
   title: string;
@@ -75,8 +76,8 @@ const TagsBoard: FC<TagsBoardProps> = ({
             }
             iconColor="white"
             iconName="add"
-            iconSize={18}
-            size={35}
+            iconSize={Sizes.ROUND_BUTTON_ICON_SIZE}
+            size={Sizes.ROUND_BUTTON_SIZE}
             onPress={onIconButtonPress}
             disabled={disableIconButton}
           />

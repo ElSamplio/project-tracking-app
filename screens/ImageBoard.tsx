@@ -1,119 +1,55 @@
-import * as ImagePicker from "expo-image-picker";
-import { Button, Image, ScrollView, View, Text } from "react-native";
-import React, { useState } from "react";
-import { FileType } from "@/types/file-type";
-import useSaveImages from "@/hooks/useSaveImages";
+import { ScrollView, View, Text } from "react-native";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store/store";
+import React from "react";
 import ImageViewer from "@/components/imageviewer";
+import IconButton from "@/components/iconbutton";
+import Colors from "@/constants/Colors";
+import StackButtons from "@/components/stackbuttons";
+import Sizes from "@/constants/Sizes";
+import useImageBoard from "@/hooks/useImageBoard";
+import styles from "./style";
 
-// Main component
 const ImageBoard: React.FC = () => {
-  const [images, setImages] = useState<string[]>([]);
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const { uploadToS3 } = useSaveImages();
+  const site = useSelector((state: RootState) => state.site.site);
+  const { images, imageUrls, pickImages, takePhoto } = useImageBoard(site);
 
-  // Image Picker function (for multiple images)
-  const pickImages = async (): Promise<void> => {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!permissionResult.granted) {
-      alert("Permission to access media library is required!");
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsMultipleSelection: true, // Allow selecting multiple images
-      quality: 1,
-    });
-
-    if (!result.canceled && result.assets.length > 0) {
-      const selectedImages = result.assets.map((asset: any) => asset.uri);
-      setImages(selectedImages);
-
-      const files: FileType[] = result.assets.map((asset: any) => ({
-        uri: asset.uri,
-        type: asset.type || "image/jpeg",
-        fileName: asset.uri.split("/").pop() || "image.jpg",
-      }));
-
-      // Upload each image to S3
-      const uploadedImageUrls: string[] = [];
-      for (const file of files) {
-        try {
-          const uploadedImageUrl = await uploadToS3(file);
-          if (uploadedImageUrl) {
-            uploadedImageUrls.push(uploadedImageUrl);
-          }
-        } catch (error) {
-          console.log("ERROR UPLOADING: ", error);
-        }
-      }
-      setImageUrls(uploadedImageUrls);
-    }
-  };
-
-  // Camera Picker function
-  const takePhoto = async (): Promise<void> => {
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-    if (!permissionResult.granted) {
-      alert("Permission to access the camera is required!");
-      return;
-    }
-
-    const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      const asset = result.assets[0];
-      const file: FileType = {
-        uri: asset.uri,
-        type: asset.type || "image/jpeg",
-        fileName: asset.uri.split("/").pop() || "image.jpg",
-      };
-
-      setImages([asset.uri]);
-
-      // Upload to S3
-      try {
-        const uploadedImageUrl = await uploadToS3(file);
-        if (uploadedImageUrl) {
-          setImageUrls([uploadedImageUrl]);
-        }
-      } catch (error) {
-        console.log("ERROR UPLOADING: ", error);
-      }
-    }
-  };
+  const optionsButtons = [
+    <View style={{ marginLeft: 5 }} key={1}>
+      <IconButton
+        size={Sizes.ROUND_BUTTON_SIZE}
+        onPress={takePhoto}
+        backgroundColor={Colors.CLICKABLE_PRIMARY_BG}
+        iconColor={Colors.CLICKABLE_PRIMARY_TEXT}
+        iconName="camera-outline"
+        iconSize={Sizes.ROUND_BUTTON_ICON_SIZE}
+      />
+    </View>,
+    <View style={{ marginLeft: 5 }} key={2}>
+      <IconButton
+        size={Sizes.ROUND_BUTTON_SIZE}
+        onPress={pickImages}
+        backgroundColor={Colors.CLICKABLE_PRIMARY_BG}
+        iconColor={Colors.CLICKABLE_PRIMARY_TEXT}
+        iconName="image-sharp"
+        iconSize={Sizes.ROUND_BUTTON_ICON_SIZE}
+      />
+    </View>,
+  ];
 
   return (
-    <ScrollView>
-      {/* <Button title="Pick Images" onPress={pickImages} />
-      <Button title="Take a Photo" onPress={takePhoto} /> */}
-      <Text
-        style={{
-          fontFamily: "RalewayBold",
-          fontSize: 18,
-          marginBottom: 10,
-        }}
-      >
-        Fotos
-      </Text>
+    <ScrollView style={{ marginTop: 10 }}>
+      <View style={{ flexDirection: "row" }}>
+        <Text style={styles.photosTitleText}>{`Fotos${
+          site ? `- ${site.name}` : ``
+        }`}</Text>
+        <StackButtons
+          mainButtonIcon="add"
+          optionsButtons={optionsButtons}
+          disabled={!site}
+        />
+      </View>
       <ImageViewer imagesUris={images} />
-      {/* {imageUrls.length > 0 && (
-        <View>
-          {imageUrls.map((imageUrl, index) => (
-            <View key={index}>
-              <Text>Uploaded Image URL: {imageUrl}</Text>
-              <Image
-                source={{ uri: imageUrl }}
-                style={{ width: 100, height: 100, margin: 5 }}
-              />
-            </View>
-          ))}
-        </View>
-      )} */}
     </ScrollView>
   );
 };
